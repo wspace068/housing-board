@@ -2,68 +2,69 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>내 집 구매 가능 금액 계산기</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo',sans-serif;font-size:15px;color:#111;background:#f7f7f5;padding:1.5rem;min-height:100vh}
-.container{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;padding:1.75rem;border:1px solid #e5e5e3}
-h2{font-size:18px;font-weight:600;margin-bottom:1.5rem;color:#111}
-.section{margin-bottom:1.5rem}
-.section-title{font-size:13px;font-weight:500;color:#888;margin-bottom:10px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.field{display:flex;flex-direction:column;gap:6px}
-label{font-size:13px;color:#666}
-input[type=number],select{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#fff;color:#111;outline:none}
-input[type=number]:focus,select:focus{border-color:#999}
-.toggle-group{display:flex}
-.toggle-group button{flex:1;padding:8px;border:1px solid #ddd;background:#f5f5f3;color:#666;font-size:13px;cursor:pointer;transition:all 0.15s;font-family:inherit}
-.toggle-group button:first-child{border-radius:8px 0 0 8px;border-right:none}
-.toggle-group button:last-child{border-radius:0 8px 8px 0}
-.toggle-group button.active{background:#111;color:#fff;border-color:#111}
-.toggle-group button:disabled{opacity:0.4;cursor:not-allowed}
-.divider{border:none;border-top:1px solid #eee;margin:1.5rem 0}
-.result-card{background:#f8f8f6;border-radius:12px;padding:1.25rem;margin-bottom:12px}
-.result-card.highlight{background:#fff;border:1px solid #ccc}
-.grid-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
-.metric{display:flex;flex-direction:column;gap:4px}
-.metric .mlabel{font-size:12px;color:#888}
-.metric .mvalue{font-size:21px;font-weight:600;color:#111}
-.metric .msub{font-size:12px;color:#777;margin-top:2px}
-.grid-metrics3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.cost-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0ee;font-size:14px}
-.cost-row:last-child{border-bottom:none}
-.cost-label{color:#666}
-.cost-value{font-weight:500;color:#111}
-.cost-row.total .cost-label,.cost-row.total .cost-value{font-weight:600;color:#111}
-.badge-green{display:inline-block;font-size:11px;padding:2px 7px;border-radius:5px;margin-left:6px;background:#e6f4ea;color:#2d7a3a}
-.badge-red{display:inline-block;font-size:11px;padding:2px 7px;border-radius:5px;background:#fdecea;color:#b71c1c}
-.hint{font-size:12px;color:#999;margin-top:6px}
-.green{color:#2d7a3a}
-.red{color:#c62828}
-.error-card{background:#fdecea;border-radius:12px;padding:1.25rem;color:#b71c1c;font-size:14px}
-@media(max-width:480px){.grid2,.grid3,.grid-metrics,.grid-metrics3{grid-template-columns:1fr}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;color:#111;background:#f5f5f3;padding:1.25rem;min-height:100vh}
+.wrap{max-width:740px;margin:0 auto;background:#fff;border-radius:16px;padding:1.75rem;border:1px solid #e5e3df}
+h2{font-size:18px;font-weight:600;margin-bottom:4px}
+.subtitle{font-size:12px;color:#999;margin-bottom:1.5rem}
+.sec{margin-bottom:1.4rem}
+.sec-title{font-size:12px;font-weight:600;color:#777;letter-spacing:.02em;margin-bottom:10px;text-transform:uppercase}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.fld{display:flex;flex-direction:column;gap:5px}
+label{font-size:12px;color:#777}
+input[type=number],select{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:14px;background:#fff;color:#111;outline:none;-webkit-appearance:none}
+input:focus,select:focus{border-color:#888}
+.tog{display:flex}
+.tog button{flex:1;padding:7px 4px;border:1px solid #ddd;background:#f5f5f3;color:#777;font-size:12px;cursor:pointer;font-family:inherit;transition:all .12s}
+.tog button:first-child{border-radius:8px 0 0 8px;border-right:none}
+.tog button:last-child{border-radius:0 8px 8px 0}
+.tog button.on{background:#111;color:#fff;border-color:#111}
+.tog button:disabled{opacity:.35;cursor:not-allowed}
+hr{border:none;border-top:1px solid #eee;margin:1.4rem 0}
+.card{background:#f8f7f5;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:10px}
+.card.hi{background:#fff;border:1px solid #c8c8c4}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.mg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.m-lbl{font-size:11px;color:#999;margin-bottom:3px}
+.m-val{font-size:21px;font-weight:600;color:#111;line-height:1.2}
+.m-sub{font-size:11px;color:#888;margin-top:3px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0efec;font-size:13px}
+.row:last-child{border-bottom:none}
+.rl{color:#777}
+.rv{font-weight:500;color:#111}
+.row.tot .rl,.row.tot .rv{font-weight:600;color:#111;font-size:14px}
+.g{color:#2a7a3b}
+.r{color:#c0392b}
+.badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:5px;vertical-align:middle}
+.bg{background:#e6f4ea;color:#2a7a3b}
+.br{background:#fdecea;color:#b71c1c}
+.by{background:#fff8e1;color:#8a6000}
+.hint{font-size:11px;color:#aaa;margin-top:6px;line-height:1.6}
+.warn-box{background:#fff8e1;border-left:3px solid #f0b429;border-radius:0 8px 8px 0;padding:10px 12px;margin-top:10px}
+.warn-box p{font-size:12px;color:#6b4800;line-height:1.7}
+.warn-box p+p{margin-top:4px}
+.err{background:#fdecea;border-radius:12px;padding:1.1rem 1.25rem;color:#b71c1c;font-size:13px;line-height:1.6}
+.sec-title-card{font-size:12px;font-weight:600;color:#777;margin-bottom:8px}
+@media(max-width:500px){.g2,.g3,.g4,.mg,.mg3{grid-template-columns:1fr}.tog button{font-size:11px;padding:7px 2px}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 <h2>내 집 구매 가능 금액 계산기</h2>
+<p class="subtitle">2026년 현행 법적 기준 반영 (10·15 대책, 6·27 대책, DSR 3단계)</p>
 
-<div class="section">
-  <div class="section-title">소득 & 대출 조건</div>
-  <div class="grid2">
-    <div class="field">
-      <label>연소득 (원천징수 기준, 만원)</label>
-      <input type="number" id="income" value="0" step="100" min="0">
-    </div>
-    <div class="field">
-      <label>보유 현금 (만원)</label>
-      <input type="number" id="cash" value="0" step="500" min="0">
-    </div>
-    <div class="field">
-      <label>최대 대출 기간</label>
-      <select id="loanYear">
+<div class="sec">
+  <div class="sec-title">소득 & 대출 조건</div>
+  <div class="g2">
+    <div class="fld"><label>연소득 (원천징수 기준, 만원)</label><input type="number" id="income" value="0" step="100" min="0"></div>
+    <div class="fld"><label>보유 현금 (만원)</label><input type="number" id="cash" value="0" step="500" min="0"></div>
+    <div class="fld"><label>대출 기간</label>
+      <select id="yr">
         <option value="30" selected>30년 (수도권 최대)</option>
         <option value="25">25년</option>
         <option value="20">20년</option>
@@ -71,242 +72,256 @@ input[type=number]:focus,select:focus{border-color:#999}
         <option value="40">40년 (지방만 가능)</option>
       </select>
     </div>
-    <div class="field">
-      <label>예상 대출 금리 (%)</label>
-      <input type="number" id="rate" value="4" step="0.1" min="1" max="15">
-    </div>
+    <div class="fld"><label>예상 대출 금리 (%)</label><input type="number" id="rate" value="4" step="0.1" min="1" max="15"></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">주택 조건</div>
-  <div class="grid3">
-    <div class="field">
-      <label>생애최초 여부</label>
-      <div class="toggle-group">
-        <button id="btn-first-y" class="active" onclick="setToggle('first','y')">생애최초</button>
-        <button id="btn-first-n" onclick="setToggle('first','n')">아님</button>
+<div class="sec">
+  <div class="sec-title">주택 조건</div>
+  <div class="g2">
+    <div class="fld"><label>생애최초 여부</label>
+      <div class="tog">
+        <button id="btn-first-y" class="on" onclick="set('first','y')">생애최초</button>
+        <button id="btn-first-n" onclick="set('first','n')">아님</button>
       </div>
     </div>
-    <div class="field">
-      <label>지역</label>
-      <div class="toggle-group">
-        <button id="btn-region-metro" class="active" onclick="setToggle('region','metro')">수도권</button>
-        <button id="btn-region-non" onclick="setToggle('region','non')">지방</button>
+    <div class="fld"><label>지역</label>
+      <div class="tog">
+        <button id="btn-reg-metro" class="on" onclick="set('reg','metro')">수도권</button>
+        <button id="btn-reg-local" onclick="set('reg','local')">지방</button>
       </div>
     </div>
-    <div class="field">
-      <label>규제지역 여부</label>
-      <div class="toggle-group">
-        <button id="btn-reg-y" onclick="setToggle('reg','y')">규제지역</button>
-        <button id="btn-reg-n" class="active" onclick="setToggle('reg','n')">비규제</button>
+    <div class="fld"><label>규제지역 여부</label>
+      <div class="tog">
+        <button id="btn-rzone-y" onclick="set('rzone','y')">규제</button>
+        <button id="btn-rzone-n" class="on" onclick="set('rzone','n')">비규제</button>
+      </div>
+    </div>
+    <div class="fld"><label>전용면적</label>
+      <div class="tog">
+        <button id="btn-sqm-n" class="on" onclick="set('sqm','n')">85㎡ 이하</button>
+        <button id="btn-sqm-y" onclick="set('sqm','y')">85㎡ 초과</button>
       </div>
     </div>
   </div>
-  <p id="reg-hint" class="hint"></p>
+  <p id="zone-hint" class="hint"></p>
 </div>
 
-<hr class="divider">
-<div id="result-area"></div>
+<hr>
+<div id="out"></div>
 </div>
 
 <script>
-const state={first:'y',region:'metro',reg:'n'};
-
-function setToggle(key,val){
-  state[key]=val;
-  document.querySelectorAll('[id^="btn-'+key+'-"]').forEach(b=>b.classList.remove('active'));
-  document.getElementById('btn-'+key+'-'+val).classList.add('active');
-  if(key==='region'){
-    const yBtn=document.getElementById('btn-reg-y');
-    const nBtn=document.getElementById('btn-reg-n');
-    if(val==='non'){
-      yBtn.disabled=true; nBtn.disabled=true;
-      state.reg='n';
-      nBtn.classList.add('active'); yBtn.classList.remove('active');
-    } else {
-      yBtn.disabled=false; nBtn.disabled=false;
-    }
+const S={first:'y',reg:'metro',rzone:'n',sqm:'n'};
+function set(k,v){
+  S[k]=v;
+  document.querySelectorAll('[id^="btn-'+k+'-"]').forEach(b=>b.classList.remove('on'));
+  document.getElementById('btn-'+k+'-'+v).classList.add('on');
+  if(k==='reg'){
+    ['y','n'].forEach(x=>document.getElementById('btn-rzone-'+x).disabled=(v==='local'));
+    if(v==='local'){S.rzone='n';document.getElementById('btn-rzone-n').classList.add('on');document.getElementById('btn-rzone-y').classList.remove('on')}
   }
   calc();
 }
 
-function fmt(n){return Math.round(n).toLocaleString('ko-KR');}
-function fmtA(n){
-  n=Math.round(n);
-  if(n>=10000){
-    const ok=Math.floor(n/10000);
-    const man=n%10000;
-    if(man===0) return ok+'억원';
-    return ok+'억 '+fmt(man)+'만원';
-  }
-  return fmt(n)+'만원';
+const W=x=>Math.round(x);
+function fm(n){
+  n=W(n);
+  if(n>=10000){const a=Math.floor(n/10000),b=n%10000;return b?a+'억 '+b.toLocaleString()+'만원':a+'억원'}
+  return n.toLocaleString()+'만원';
+}
+function fp(n){return W(n).toLocaleString()+'만원/월'}
+
+// 원리금균등상환
+function pmt(loan,ar,mo){
+  const r=ar/12/100;
+  if(r===0)return loan/mo;
+  return loan*r*Math.pow(1+r,mo)/(Math.pow(1+r,mo)-1);
+}
+// DSR 기반 최대 대출 (만원)
+function dsr_max(income,ar,stress,mo){
+  const lim=income*10000*0.4/12;
+  const r=(ar+stress)/12/100;
+  if(r===0)return lim*mo/10000;
+  return lim/r*(1-1/Math.pow(1+r,mo))/10000;
 }
 
-function monthlyPayment(principal,annualRate,months){
-  const r=annualRate/12/100;
-  if(r===0) return principal/months;
-  return principal*r*Math.pow(1+r,months)/(Math.pow(1+r,months)-1);
+// 취득세 계산 (price: 만원, over85: bool, isFirst: bool)
+function acq(price,isFirst,over85){
+  let rate;
+  if(price<=60000) rate=0.01;
+  else if(price<=90000) rate=0.01+(price-60000)/30000*0.02;
+  else rate=0.03;
+  const edu=rate*0.1;            // 지방교육세: 취득세율×10%
+  const rural=over85?rate*0.1:0; // 농어촌특별세: 85㎡ 초과만, 취득세율×10%
+  const tax=W(price*(rate+edu+rural));
+  const discount=isFirst?Math.min(tax,200):0; // 생애최초 최대 200만원 (12억 이하)
+  // 12억 초과 시 감면 없음
+  const finalDiscount=price>120000?0:discount;
+  return{tax,discount:finalDiscount,rate,edu,rural};
 }
 
-function maxLoanByDSR(income,annualRate,stressRate,months){
-  const monthlyLimit=income*10000*0.4/12;
-  const r=(annualRate+stressRate)/12/100;
-  if(r===0) return monthlyLimit*months;
-  return monthlyLimit/r*(1-1/Math.pow(1+r,months));
+// 중개수수료 (법정 최대 요율, price: 만원)
+function broker(price){
+  let r,cap;
+  if(price<5000)      {r=0.006;cap=25;}
+  else if(price<20000){r=0.005;cap=80;}
+  else if(price<90000){r=0.004;cap=999999;}
+  else if(price<120000){r=0.005;cap=999999;}
+  else if(price<150000){r=0.006;cap=999999;}
+  else                {r=0.007;cap=999999;}
+  return Math.min(W(price*r/100)*100,cap);
 }
 
-function calcAcqTax(price,isFirst){
-  let rate,edu,rural=0;
-  if(price<=60000){rate=0.01;edu=0.001;}
-  else if(price<=90000){rate=(price-60000)/30000*0.02+0.01;edu=rate*0.1;}
-  else{rate=0.03;edu=0.003;rural=0.006;}
-  let tax=Math.round(price*10000*(rate+edu+rural)/10000);
-  let discount=0;
-  if(isFirst==='y'){
-    const rawTax=price*10000*(rate+edu+rural);
-    if(price<=30000) discount=Math.round(rawTax/10000);
-    else if(price<=60000) discount=Math.min(Math.round(rawTax*0.5/10000),200);
-    else if(price<=90000) discount=Math.min(Math.round(rawTax*0.25/10000),200);
-    else discount=200;
-  }
-  return{tax,discount};
+// 법무사 비용 추정 (만원)
+function legal(price){
+  return W((150+Math.min(price/10000,5)*10)/10)*10;
 }
 
-function calcBroker(price){
-  let r;
-  if(price<=50000) r=0.006;
-  else if(price<=90000) r=0.005;
-  else r=0.007;
-  return Math.round(price*r/100)*100;
-}
-
-function calcLegal(price){
-  return Math.round((150+Math.min(price/10000,5)*10)/10)*10;
+// 수도권 집값별 대출 상한 (만원)
+function tierCap(price){
+  if(price<=150000)return 60000;
+  if(price<=250000)return 40000;
+  return 20000;
 }
 
 function calc(){
   const income=parseFloat(document.getElementById('income').value)||0;
   const cash=parseFloat(document.getElementById('cash').value)||0;
-  const loanYear=parseInt(document.getElementById('loanYear').value)||30;
+  const yr=parseInt(document.getElementById('yr').value)||30;
   const rate=parseFloat(document.getElementById('rate').value)||4;
-  const months=loanYear*12;
-  const{first,region,reg}=state;
-  const isMetro=region==='metro';
+  const mo=yr*12;
+  const{first,reg,rzone,sqm}=S;
+  const isMetro=reg==='metro';
   const isFirst=first==='y';
+  const isRzone=rzone==='y';
+  const over85=sqm==='y';
 
-  let ltv=isFirst?0.7:(reg==='y'?0.4:0.7);
+  // LTV 결정
+  let ltv;
   if(!isMetro) ltv=0.7;
+  else if(isFirst) ltv=0.7;       // 생애최초: 규제지역도 70%
+  else if(isRzone) ltv=0.4;       // 규제지역 일반 무주택: 40%
+  else ltv=0.7;                   // 비규제지역 일반 무주택: 70%
 
-  const hint=document.getElementById('reg-hint');
-  if(!isMetro) hint.textContent='지방은 규제지역 구분 없이 LTV 70% 적용';
-  else if(reg==='y') hint.textContent='규제지역: 강남·서초·송파·용산구 해당 (생애최초도 LTV 70%)';
-  else hint.textContent='비규제지역 기준 적용';
-
-  const stressRate=isMetro?3:0.75;
-  const maxByDSR=Math.round(maxLoanByDSR(income,rate,stressRate,months)/10000);
-  const loanCap=isMetro?60000:9999999;
-  let dsrCapLoan=Math.min(maxByDSR,loanCap);
-  let limitReason=maxByDSR<=loanCap?'DSR 한도':'정부 대출 상한 ('+fmtA(loanCap)+')';
-
-  function computeMaxPrice(loan){
-    return Math.round(loan/ltv/100)*100;
+  // 지역 안내
+  const zoneEl=document.getElementById('zone-hint');
+  if(!isMetro){
+    zoneEl.textContent='지방: 규제지역 구분 없이 LTV 70% | 스트레스 금리 +0.75% | 대출만기 최대 40년 가능';
+  } else if(isRzone){
+    zoneEl.textContent='규제지역: 서울 전역 + 경기 12개 지역(과천·광명·수원영통·장안·팔달·성남분당·수정·중원·안양동안·용인수지·의왕·하남) | 생애최초 LTV 70%, 일반 무주택 LTV 40%';
+  } else {
+    zoneEl.textContent='비규제지역: 수도권 스트레스 금리 +3% 적용 | 대출만기 최대 30년';
   }
 
-  const maxPriceByLoan=computeMaxPrice(dsrCapLoan);
+  const stress=isMetro?3:0.75;
+  const maxDSR=W(dsr_max(income,rate,stress,mo));
 
-  const acqEst=calcAcqTax(maxPriceByLoan,first);
-  const legalEst=calcLegal(maxPriceByLoan);
-  const brokerEst=calcBroker(maxPriceByLoan);
-  const feeEst=acqEst.tax-acqEst.discount+legalEst+brokerEst;
+  // 반복 계산 (fee가 price에 따라 달라지므로)
+  let estLoan=Math.min(maxDSR, isMetro?60000:9999999);
+  let estPrice=W((estLoan+cash)/100)*100;
+  let cap=isMetro?tierCap(estPrice):9999999;
+  let usedLoan=Math.min(maxDSR,cap);
+  let fees=acq(estPrice,isFirst,over85).tax-acq(estPrice,isFirst,over85).discount+legal(estPrice)+broker(estPrice);
+  let availCash=cash-fees;
 
-  const realCash=cash-feeEst;
-  if(realCash<0){
-    document.getElementById('result-area').innerHTML=`<div class="error-card">현금이 부대비용(약 ${fmtA(feeEst)})에도 부족합니다. 현금을 늘려주세요.</div>`;
+  if(availCash<0){
+    document.getElementById('out').innerHTML=`<div class="err">보유 현금이 부대비용(약 ${fm(fees)})보다 적습니다. 현금을 늘려주세요.</div>`;
     return;
   }
 
-  const maxPrice=Math.round((realCash+dsrCapLoan)/100)*100;
-  const usedLoan=Math.min(Math.round(maxPrice*ltv/100)*100,dsrCapLoan,loanCap);
+  // 최종 집값 계산
+  const maxPrice=W((availCash+usedLoan)/100)*100;
+  // LTV 재확인
+  const ltvLoan=W(maxPrice*ltv/100)*100;
+  const finalTierCap=isMetro?tierCap(maxPrice):9999999;
+  const finalLoan=Math.min(ltvLoan,usedLoan,finalTierCap);
 
-  const acq=calcAcqTax(maxPrice,first);
-  const legal=calcLegal(maxPrice);
-  const broker=calcBroker(maxPrice);
-  const totalFee=acq.tax-acq.discount+legal+broker;
-  const totalFeeRaw=acq.tax+legal+broker;
+  // 최종 부대비용 재계산
+  const acqR=acq(maxPrice,isFirst,over85);
+  const legalFee=legal(maxPrice);
+  const brokerFee=broker(maxPrice);
+  const totalFee=acqR.tax-acqR.discount+legalFee+brokerFee;
+  const realCash=cash-totalFee;
 
-  const monthly=Math.round(monthlyPayment(usedLoan*10000,rate,months)/10000);
-  const totalInterest=Math.round((monthly*months-usedLoan)/100)*100;
-  const dsrRatio=Math.round(monthly*12/(income*0.01));
-  const dsrColor=dsrRatio<=30?'green':dsrRatio<=40?'':' red';
-  const dsrLabel=dsrRatio<=30?'안정':dsrRatio<=40?'주의':'위험';
+  const actualPrice=W((realCash+finalLoan)/100)*100;
+  const actualLoan=Math.min(W(actualPrice*ltv/100)*100,finalLoan);
 
-  document.getElementById('result-area').innerHTML=`
-  <div class="result-card highlight">
-    <div class="grid-metrics" style="margin-bottom:1rem">
-      <div class="metric">
-        <span class="mlabel">최대 구매 가능 집값</span>
-        <span class="mvalue">${fmtA(maxPrice)}</span>
-        <span class="msub">순수 집값 기준</span>
-      </div>
-      <div class="metric">
-        <span class="mlabel">부대비용 (별도 필요)</span>
-        <span class="mvalue" style="font-size:18px">${fmtA(totalFee)}</span>
-        <span class="msub">취득세+법무사+중개수수료${acq.discount>0?' (감면 적용)':''}</span>
-      </div>
+  const acqF=acq(actualPrice,isFirst,over85);
+  const legalF=legal(actualPrice);
+  const brokerF=broker(actualPrice);
+  const totalFeeF=acqF.tax-acqF.discount+legalF+brokerF;
+
+  const monthly=W(pmt(actualLoan*10000,rate,mo)/10000);
+  const totalInt=W((monthly*mo-actualLoan)/100)*100;
+  const dsrPct=income>0?W(monthly*12/(income*0.01)):0;
+  const dsrColor=dsrPct<=30?'g':dsrPct<=40?'':'r';
+  const dsrLabel=dsrPct<=30?'안정 (30% 이하)':dsrPct<=40?'주의 (30~40%)':'위험 (40% 초과)';
+
+  // 한도 결정 이유
+  let limitReason='DSR 한도';
+  if(actualLoan>=finalTierCap&&actualLoan<maxDSR) limitReason=`집값 구간 상한 (${fm(finalTierCap)})`;
+  else if(dsrPct===0) limitReason='소득 미입력';
+
+  // 취득세율 텍스트
+  const taxRatePct=W((acqF.rate+acqF.edu+acqF.rural)*1000)/10;
+
+  let html=`
+  <div class="card hi">
+    <div class="mg">
+      <div><div class="m-lbl">최대 구매 가능 집값</div><div class="m-val">${fm(actualPrice)}</div><div class="m-sub">순수 집값 기준 (부대비용 별도)</div></div>
+      <div><div class="m-lbl">부대비용 <span class="badge by">별도 필요</span></div><div class="m-val" style="font-size:18px">${fm(totalFeeF)}</div><div class="m-sub">취득세+법무사+중개수수료</div></div>
     </div>
-    <div class="grid-metrics3">
-      <div class="metric">
-        <span class="mlabel">최대 대출액</span>
-        <span class="mvalue" style="font-size:17px">${fmtA(usedLoan)}</span>
-        <span class="msub">${limitReason}</span>
-      </div>
-      <div class="metric">
-        <span class="mlabel">월 원리금 (${rate}%)</span>
-        <span class="mvalue" style="font-size:17px">${fmtA(monthly)}</span>
-      </div>
-      <div class="metric">
-        <span class="mlabel">월소득 대비 비율</span>
-        <span class="mvalue ${dsrColor}" style="font-size:17px">${dsrRatio}%</span>
-        <span class="msub">${dsrLabel}</span>
-      </div>
+    <div class="mg3">
+      <div><div class="m-lbl">최대 대출액</div><div class="m-val" style="font-size:17px">${fm(actualLoan)}</div><div class="m-sub">${limitReason}</div></div>
+      <div><div class="m-lbl">월 원리금 (${rate}% 기준)</div><div class="m-val" style="font-size:17px">${fp(monthly)}</div></div>
+      <div><div class="m-lbl">월소득 대비</div><div class="m-val ${dsrColor}" style="font-size:16px">${income>0?dsrPct+'%':'—'}</div><div class="m-sub">${income>0?dsrLabel:'소득 입력 필요'}</div></div>
     </div>
   </div>
 
-  <div class="result-card">
-    <div class="section-title">대출 한도 산정 근거</div>
-    <div class="cost-row"><span class="cost-label">DSR 월 한도 (연소득 × 40% ÷ 12)</span><span class="cost-value">${fmtA(Math.round(income*10000*0.4/12/10000))}원/월</span></div>
-    <div class="cost-row"><span class="cost-label">스트레스 금리 적용 (${rate}% + ${stressRate}% = ${rate+stressRate}%)</span><span class="cost-value">${isMetro?'수도권 +3%':'지방 +0.75%'}</span></div>
-    <div class="cost-row"><span class="cost-label">DSR 기준 최대 대출</span><span class="cost-value">${fmtA(maxByDSR)}</span></div>
-    <div class="cost-row"><span class="cost-label">LTV ${Math.round(ltv*100)}% (${isFirst?'생애최초':'일반 무주택'})</span><span class="cost-value">집값의 ${Math.round(ltv*100)}%까지</span></div>
-    ${isMetro?`<div class="cost-row"><span class="cost-label">정부 대출 상한 (15억 이하 기준)</span><span class="cost-value">최대 6억원</span></div>`:''}
-    <div class="cost-row total"><span class="cost-label">최종 대출 한도</span><span class="cost-value">${fmtA(usedLoan)}</span></div>
+  <div class="card">
+    <div class="sec-title-card">대출 한도 산정 근거</div>
+    <div class="row"><span class="rl">DSR 한도 (연소득 × 40% ÷ 12)</span><span class="rv">${income>0?fp(W(income*10000*0.4/12/10000)):'—'}</span></div>
+    <div class="row"><span class="rl">스트레스 금리 (${rate}% + ${stress}% = ${rate+stress}%)</span><span class="rv">${isMetro?'수도권 +3%':'지방 +0.75%'}</span></div>
+    <div class="row"><span class="rl">DSR 기준 최대 대출</span><span class="rv">${fm(maxDSR)}</span></div>
+    <div class="row"><span class="rl">LTV ${W(ltv*100)}% (${isFirst?'생애최초':'일반 무주택'} · ${isMetro?(isRzone?'규제지역':'비규제지역'):'지방'})</span><span class="rv">집값의 ${W(ltv*100)}%까지</span></div>
+    ${isMetro?`<div class="row"><span class="rl">집값 구간별 대출 상한</span><span class="rv">15억 이하 6억 / 15~25억 4억 / 25억↑ 2억</span></div>`:''}
+    <div class="row tot"><span class="rl">최종 대출 한도</span><span class="rv">${fm(actualLoan)}</span></div>
   </div>
 
-  <div class="result-card">
-    <div class="section-title">부대비용 상세</div>
-    <div class="cost-row"><span class="cost-label">취득세 (원금)</span><span class="cost-value">${fmtA(acq.tax)}</span></div>
-    ${acq.discount>0?`<div class="cost-row"><span class="cost-label">생애최초 취득세 감면 <span class="badge-green">감면</span></span><span class="cost-value green">-${fmtA(acq.discount)}</span></div>`:''}
-    <div class="cost-row"><span class="cost-label">법무사 비용 (등기 대행)</span><span class="cost-value">약 ${fmtA(legal)}</span></div>
-    <div class="cost-row"><span class="cost-label">중개수수료 (법정 최대 요율)</span><span class="cost-value">약 ${fmtA(broker)}</span></div>
-    <div class="cost-row total"><span class="cost-label">부대비용 합계</span><span class="cost-value">${fmtA(totalFee)}</span></div>
+  <div class="card">
+    <div class="sec-title-card">부대비용 상세</div>
+    <div class="row"><span class="rl">취득세 (세율 ${taxRatePct}% = 취득세 ${W(acqF.rate*1000)/10}% + 교육세 ${W(acqF.edu*1000)/10}%${over85?' + 농특세 '+W(acqF.rural*1000)/10+'%':''})</span><span class="rv">${fm(acqF.tax)}</span></div>
+    ${acqF.discount>0?`<div class="row"><span class="rl">생애최초 취득세 감면 <span class="badge bg">최대 200만원</span></span><span class="rv g">-${fm(acqF.discount)}</span></div>`:''}
+    ${!over85?`<div class="row"><span class="rl">농어촌특별세</span><span class="rv">비과세 (85㎡ 이하)</span></div>`:''}
+    <div class="row"><span class="rl">법무사 비용 (등기 대행 추정)</span><span class="rv">약 ${fm(legalF)}</span></div>
+    <div class="row"><span class="rl">중개수수료 (법정 최대 요율)</span><span class="rv">약 ${fm(brokerF)}</span></div>
+    <div class="row tot"><span class="rl">부대비용 합계</span><span class="rv">${fm(totalFeeF)}</span></div>
   </div>
 
-  <div class="result-card">
-    <div class="section-title">자금 구성</div>
-    <div class="cost-row"><span class="cost-label">보유 현금</span><span class="cost-value">${fmtA(cash)}</span></div>
-    <div class="cost-row"><span class="cost-label">- 부대비용</span><span class="cost-value red">-${fmtA(totalFee)}</span></div>
-    <div class="cost-row"><span class="cost-label">집값에 쓸 수 있는 현금</span><span class="cost-value">${fmtA(cash-totalFee)}</span></div>
-    <div class="cost-row"><span class="cost-label">+ 대출</span><span class="cost-value">${fmtA(usedLoan)}</span></div>
-    <div class="cost-row total"><span class="cost-label">최대 집값</span><span class="cost-value">${fmtA(maxPrice)}</span></div>
-    <div class="cost-row"><span class="cost-label">30년 총 이자 (${rate}% 기준)</span><span class="cost-value">${fmtA(totalInterest)}</span></div>
+  <div class="card">
+    <div class="sec-title-card">자금 구성</div>
+    <div class="row"><span class="rl">보유 현금</span><span class="rv">${fm(cash)}</span></div>
+    <div class="row"><span class="rl">- 부대비용</span><span class="rv r">-${fm(totalFeeF)}</span></div>
+    <div class="row"><span class="rl">집값에 쓸 수 있는 현금</span><span class="rv">${fm(cash-totalFeeF)}</span></div>
+    <div class="row"><span class="rl">+ 대출</span><span class="rv">${fm(actualLoan)}</span></div>
+    <div class="row tot"><span class="rl">최대 집값</span><span class="rv">${fm(actualPrice)}</span></div>
+    <div class="row"><span class="rl">30년 이자 총액 (${rate}% 기준)</span><span class="rv">${fm(totalInt)}</span></div>
+  </div>
+
+  <div class="warn-box">
+    <p><b>⚠️ 꼭 확인하세요</b></p>
+    ${isMetro?'<p>· 수도권 주담대 취득 후 <b>6개월 이내 전입 의무</b> (미이행 시 대출 회수 + 3년간 주택 관련 대출 제한)</p>':''}
+    ${isFirst?'<p>· 생애최초 취득세 감면: 취득 후 <b>90일 이내 전입, 3년 이상 실거주</b> 필수 (위반 시 감면세액 추징)</p>':''}
+    <p>· 실제 대출 한도는 신용등급, 기존 부채, 은행 내부 심사 기준에 따라 달라질 수 있어요</p>
+    <p>· 중개수수료는 법정 최대 요율 기준이며 협의로 낮출 수 있어요</p>
+    <p>· 이 계산기는 참고용이며 정확한 한도는 은행 사전심사를 통해 확인하세요</p>
   </div>`;
+
+  document.getElementById('out').innerHTML=html;
 }
 
-document.getElementById('income').addEventListener('input',calc);
-document.getElementById('cash').addEventListener('input',calc);
-document.getElementById('loanYear').addEventListener('change',calc);
-document.getElementById('rate').addEventListener('input',calc);
+['income','cash','yr','rate'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
 calc();
 </script>
 </body>

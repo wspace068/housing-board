@@ -217,40 +217,43 @@ function calc(){
   const stress=isMetro?3:0.75;
   const maxDSR=W(dsr_max(income,rate,stress,mo));
 
-  // 반복 계산 (fee가 price에 따라 달라지므로)
-  let estLoan=Math.min(maxDSR, isMetro?60000:9999999);
-  let estPrice=W((estLoan+cash)/100)*100;
-  let cap=isMetro?tierCap(estPrice):9999999;
-  let usedLoan=Math.min(maxDSR,cap);
-  let fees=acq(estPrice,isFirst,over85).tax-acq(estPrice,isFirst,over85).discount+legal(estPrice)+broker(estPrice);
-  let availCash=cash-fees;
-
-  if(availCash<0){
-    document.getElementById('out').innerHTML=`<div class="err">보유 현금이 부대비용(약 ${fm(fees)})보다 적습니다. 현금을 늘려주세요.</div>`;
-    return;
+  // 반복 수렴: price → fee → availCash → loan → price
+  // LTV 제약이 있을 때 price×ltv < DSR이면 price = availCash/(1-ltv)로 수렴
+  let actualPrice=0, actualLoan=0, totalFeeF=0;
+  let price=cash+maxDSR; // 초기 추정
+  for(let i=0;i<10;i++){
+    const acqR2=acq(price,isFirst,over85);
+    const fee=acqR2.tax-acqR2.discount+legal(price)+broker(price);
+    const avail=cash-fee;
+    if(avail<0){price=price*0.8;continue;}
+    const tCap=isMetro?tierCap(price):9999999;
+    const loanByCap=Math.min(maxDSR,tCap);       // DSR & 정부상한
+    const loanByLTV=W(price*ltv/100)*100;          // LTV 제약
+    const loan=Math.min(loanByCap,loanByLTV);      // 세 기준 중 최소
+    const newPrice=W((avail+loan)/100)*100;
+    if(Math.abs(newPrice-price)<100){price=newPrice;break;}
+    price=newPrice;
+  }
+  // 최종값 확정
+  {
+    const acqR2=acq(price,isFirst,over85);
+    totalFeeF=acqR2.tax-acqR2.discount+legal(price)+broker(price);
+    const avail=cash-totalFeeF;
+    if(avail<0){
+      document.getElementById('out').innerHTML=`<div class="err">보유 현금이 부대비용(약 ${fm(totalFeeF)})보다 적습니다. 현금을 늘려주세요.</div>`;
+      return;
+    }
+    const tCap=isMetro?tierCap(price):9999999;
+    actualLoan=Math.min(Math.min(maxDSR,tCap), W(price*ltv/100)*100);
+    actualPrice=price;
   }
 
-  // 최종 집값 계산
-  const maxPrice=W((availCash+usedLoan)/100)*100;
-  // LTV 재확인
-  const ltvLoan=W(maxPrice*ltv/100)*100;
-  const finalTierCap=isMetro?tierCap(maxPrice):9999999;
-  const finalLoan=Math.min(ltvLoan,usedLoan,finalTierCap);
-
-  // 최종 부대비용 재계산
-  const acqR=acq(maxPrice,isFirst,over85);
-  const legalFee=legal(maxPrice);
-  const brokerFee=broker(maxPrice);
-  const totalFee=acqR.tax-acqR.discount+legalFee+brokerFee;
-  const realCash=cash-totalFee;
-
-  const actualPrice=W((realCash+finalLoan)/100)*100;
-  const actualLoan=Math.min(W(actualPrice*ltv/100)*100,finalLoan);
-
+  const finalTierCap=isMetro?tierCap(actualPrice):9999999;
   const acqF=acq(actualPrice,isFirst,over85);
+
+
   const legalF=legal(actualPrice);
   const brokerF=broker(actualPrice);
-  const totalFeeF=acqF.tax-acqF.discount+legalF+brokerF;
 
   const monthly=W(pmt(actualLoan*10000,rate,mo)/10000);
   const totalInt=W((monthly*mo-actualLoan)/100)*100;
